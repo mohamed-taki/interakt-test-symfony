@@ -45,9 +45,11 @@
     {% if user %}
         <div class="col-2"></div>
         <div class="col-1">
-            <button class="btn btn-light rounded-circle">
-                <i class="far fa-user"></i>
-            </button>
+            <a href="/logout">
+                <button class="btn btn-light rounded-circle">
+                    <i class="far fa-user"></i>
+                </button>
+            </a>
         </div>
     {% else %}
         <div class="col-3">

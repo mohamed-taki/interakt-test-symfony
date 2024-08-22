@@ -54,7 +54,7 @@ class SecurityController extends AbstractController
                     ->from(new Address('mohamedtaki24@gmail.com', 'Acme Mail Bot'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('auth/confirmation_email.html.twig')
             );
             return $this->render("auth/email.sent.html.twig");
         }
