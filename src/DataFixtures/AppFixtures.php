@@ -25,8 +25,7 @@ class AppFixtures extends Fixture{
         ;
         $user->setPassword($this->userPasswordHasher->hashPassword($user, '123'));
         $manager->persist($user);
-
-
+        
         $manager->persist(
             (new Course())
                 ->setTitle('Arabic Language course')

@@ -1,0 +1,7 @@
+{# this is the standard page layout #}
+{% extends 'base.html.twig' %} 
+{% block body %}
+    {{ include("widgets/header.html.twig" , {'user' : user} ) }}
+    {% block content %}{% endblock %}
+    {{ include("widgets/footer.html.twig") }} 
+{% endblock %}

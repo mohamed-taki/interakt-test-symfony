@@ -4,38 +4,23 @@
         <meta charset="UTF-8">
         <title>{% block title %}Forsa - Courses{% endblock %}</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="icon" href="{{asset('images/logo_forsa.png')}}" type="image/png">
+        {# Bootstrap 5 #}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+        {# Jquery 3.6#}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        <link rel="stylesheet" href="{{asset('css/style.css')}}" />
+
+        {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
+        {# Bootstrap js #}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+        {# Main js #}
+        {% block javascripts %}{% endblock %}
     </body>
-
-    <script>
-        function togglePasswordVisibility(elem, passwordFieldSelector){
-            const $passwordField = $(passwordFieldSelector);
-            const isPasswordVisible = $passwordField.attr('type') === 'text';
-        
-            if (isPasswordVisible) {
-                $passwordField.attr('type', 'password');
-                $(this).text('Show');
-
-                $(elem).removeClass('fa-eye-slash');
-                $(elem).addClass('fa-eye');
-            } else {
-                $passwordField.attr('type', 'text');
-                $(this).text('Hide');
-                $(elem).removeClass('fa-eye');
-                $(elem).addClass('fa-eye-slash');
-            }
-        }
-    </script>
 </html>

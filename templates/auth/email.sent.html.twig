@@ -2,7 +2,7 @@
 {% block title %}Email Sent! Check your inbox.{% endblock %} 
 
 {% block body %}
-<div style="height: 100vh; background-color: #041228">
+<div id="signup-email-sent-container">
   <div class="d-flex justify-content-between align-items-center h-100 p-5">
     <div class="col-4 h-100 rounded bg-white ms-3">
       <div class="bg-white p-5 rounded d-flex flex-column text-center">
@@ -17,9 +17,7 @@
         </span>
       </div>
     </div>
-    <div class="col-5 h-100 position-relative">
-      <img src="{{ asset('images/signup.png') }}" alt="" class="w-100 position-absolute" style="bottom: -79px;width: 100%;"  />
-    </div>
+    <div class="col-5 h-100 position-relative"></div>
   </div>
 </div>
 {% endblock %}

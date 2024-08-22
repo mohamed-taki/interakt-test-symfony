@@ -31,6 +31,9 @@ when@test:
             # "TEST_TOKEN" is typically set by ParaTest
             dbname_suffix: '_test%env(default::TEST_TOKEN)%'
 
+    orm:
+        default:
+            sluggable: true
 when@prod:
     doctrine:
         orm:

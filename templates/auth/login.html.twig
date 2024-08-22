@@ -2,24 +2,6 @@
 {% block title %}Sign in{% endblock %} 
 
 {% block body %}
-<style>
-  #login-container{
-    min-height: 100vh;
-    background-color: #041228;
-    background-repeat: no-repeat;
-    background-position: right 100px bottom;
-    background-position-y: 50px;
-    background-size: contain;
-    background-image: url({{ asset('images/login.png') }});
-  }
-
-  .fa-eye{
-    top: 57%;
-    right: 20px;
-    cursor: pointer;
-    color: #84818A !important;
-  }
-</style>
 <div id="login-container">
   <div class="container d-flex justify-content-between align-items-center h-100 p-5">
     <div class="col-5 h-100 rounded bg-white">
@@ -43,10 +25,9 @@
 
         {# start: password #}
         <div class="row">
-          <div class="form-group my-1 position-relative">
+          <div class="form-group my-1 position-relative password-toggler-container">
               <label for="password">Password</label>
-              <input type="password" required class="form-control" name="password" id="password" placeholder="Enter your password">
-          <i class="fa fa-eye position-absolute" onclick="togglePasswordVisibility(this, '#password')"></i>
+              <input type="password" required class="form-control password-toggler" name="password" id="password" placeholder="Enter your password">
           </div>
         </div>
         {# end: password #}
@@ -56,7 +37,7 @@
           <a href="/register" class="text-decoration-none text-dark">
             <span class="col-4">Can't Sign in ?</span>
           </a>
-          <button type="submit" class="btn btn-primary col-4" style="height: 50px;">submit</button>
+          <button type="submit" class="btn btn-primary col-4">submit</button>
         </div>
 
         {% if error %}
@@ -81,4 +62,9 @@
     <div class="col-5 h-100"></div>
   </div>
 </div>
+{% endblock %}
+
+
+{% block javascripts %}
+  <script src="{{asset('js/auth.js')}}"></script>
 {% endblock %}

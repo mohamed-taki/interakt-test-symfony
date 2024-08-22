@@ -3,30 +3,11 @@
 {% form_theme registrationForm 'form/signup.errors.html.twig' %}    
 
 {% block body %}
-<style>
-  #signup-container{
-    min-height: 100vh;
-    background-color: #041228;
-    background-repeat: no-repeat;
-    background-position: right 100px bottom;
-    background-size: contain;
-    background-image: url({{ asset('images/signup.png') }});
-  }
 
-  .form-control{
-    background-color: #F7F9FC !important;
-  }
-
-  .fa-eye{
-    top: 11px;
-    right: 12px;
-    cursor: pointer;
-    color: #84818A !important;
-  }
-</style>
 <div id="signup-container">
   <div class="container position-relative d-flex justify-content-between align-items-center h-100 p-5">
     <div class="col-5 h-100 rounded bg-white ">
+
       {# start: form container #}
       <div class="bg-white p-5 rounded">
         {{ form_start(registrationForm) }}
@@ -55,8 +36,8 @@
         {# start: phone + ext #}
         <div >
             <label for="{{registrationForm.phone.vars.id}}">{{ form_label(registrationForm.phone) }}</label>
-            <div class="row mx-0" style="background-color: #F7F9FC;">
-                <div class="px-0" style="width: 21%;">
+            <div class="row mx-0" id="signup-phone-sub-container">
+                <div class="px-0" id="signup-phone-sub-container-ext-container">
                     <div class="form-group my-1 h-100">
                     {{ form_widget(registrationForm.phone_ext) }}
                     </div>
@@ -87,9 +68,8 @@
             <div class="col-6">
                 <div class="form-group my-1">
                     <label for="{{registrationForm.password.first.vars.id}}">{{ form_label(registrationForm.password.first) }}</label>
-                    <div class="position-relative"> 
+                    <div class="position-relative password-toggler-container"> 
                       {{ form_widget(registrationForm.password.first) }}
-                      <i class="fa fa-eye position-absolute" onclick="togglePasswordVisibility(this, '#{{registrationForm.password.first.vars.id}}')"></i>
                     </div>
                     {{ form_errors(registrationForm.password.first) }}
                 </div>
@@ -97,9 +77,8 @@
             <div class="col-6">
                 <div class="form-group my-1">
                     <label for="{{registrationForm.password.second.vars.id}}">{{ form_label(registrationForm.password.second) }}</label>
-                    <div class="position-relative">
+                    <div class="position-relative password-toggler-container">
                       {{ form_widget(registrationForm.password.second) }}
-                      <i class="fa fa-eye position-absolute" onclick="togglePasswordVisibility(this, '#{{registrationForm.password.second.vars.id}}')"></i>
                     </div>
                     {{ form_errors(registrationForm.password.second) }}
                 </div>
@@ -117,7 +96,7 @@
         </div>
         {# end: terms #}
 
-        <button type="submit" class="btn btn-primary col-12 mt-4" style="height: 50px;">submit</button>
+        <button type="submit" class="btn btn-primary col-12 mt-4">submit</button>
         
         {{ form_end(registrationForm) }}
       </div>
@@ -125,4 +104,9 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+
+{% block javascripts %}
+  <script src="{{asset('js/auth.js')}}"></script>
 {% endblock %}

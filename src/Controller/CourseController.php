@@ -6,11 +6,10 @@ use App\Entity\Course;
 use App\Entity\User;
 use App\Form\CreateCourseFormType;
 use App\Repository\CourseRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,28 +17,32 @@ use Symfony\Component\Routing\Attribute\Route;
 class CourseController extends AbstractController{
     private CourseRepository $courseRepository;
     private EntityManagerInterface $em;
-    public function __construct(CourseRepository $courseRepository, EntityManagerInterface $em) {
+    private User|null $user;
+    private PaginatorInterface $paginator;
+
+    public function __construct(CourseRepository $courseRepository, EntityManagerInterface $em, PaginatorInterface $paginator, Security $security) {
         $this->courseRepository = $courseRepository;
         $this->em = $em;
+        $this->paginator = $paginator;
+        $this->user = $security->getUser() ?? null;
     }
+
+    
     #[Route('/home', name: 'app_home')]
-    public function index(Request $request, PaginatorInterface $paginator): Response{
-        $queryBuilder = $this->courseRepository->createQueryBuilder('c')
-            ->orderBy('c.title', 'ASC');
+    public function index(Request $request): Response{
+        $courses = $this->courseRepository->findAll();
 
         $limit = $request->query->getInt('limit', 10);  
-
-        $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1), /* page number */
-            $limit, /* limit per page */
+        $pagination = $this->paginator->paginate(
+            $courses, 
+            $request->query->getInt('page', 1),
+            $limit,
         );
-
 
         return $this->render('course/list.html.twig', [
             'pagination' => $pagination,
             'limit' => $limit,
-            'user' => $this->getUser(),
+            'user' => $this->user,
         ]);
     }
 
@@ -49,77 +52,74 @@ class CourseController extends AbstractController{
         $form = $this->createForm(CreateCourseFormType::class, $course);
         $form->handleRequest($request);
 
+        // the CreateCourseFormType::class Already validates all the required fields for us
         if ($form->isSubmitted() && $form->isValid()) {
 
             /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $file */
             $file = $form->get('image')->getData();
-            
-            // TODO: Create a seperated service to handle the creation request
-            if ($file) {
-                $newFilename = uniqid() . '.' . $file->guessExtension();
 
-                // Move the file to the directory where brochures are stored
-                $file->move(
-                    $this->getParameter('courses_images_uploads_directory'),
-                    $newFilename
-                );
+            // set a unique filename
+            $newFilename = uniqid() . '.' . $file->guessExtension();
+            $file->move(
+                $this->getParameter('courses_images_uploads_full_directory'),
+                $newFilename
+            );
 
-                $course->setImagePath('/images/courses/' . $newFilename);
-                $course->setCreator($this->getUser());
+            // upload image to the dynamic images directory
+            $course->setImagePath('/' . $this->getParameter('courses_images_uploads_directory') . $newFilename);
 
-                $this->em->persist($course);
-                $this->em->flush();
-                return $this->redirectToRoute('app_home');
-            }
+            // set the new course's creator as the current user
+            $course->setCreator($this->user);
+
+            $this->em->persist($course);
+            $this->em->flush();
+
+            return $this->redirectToRoute('app_home');
         }
         return $this->render('course/new.html.twig', [
-            'user' => $this->getUser(),
-            'errors' => $form->getErrors(),
+            'user' => $this->user,
             'form' => $form
         ]);
     }
 
     #[Route('/fav', name:'app_course_favs')]
-    public function showFavourites(Request $request): Response{
-        /** @var \App\Entity\User $user */
-        $user = $this->getUser();
-
+    public function showFavourites(): Response{
         return $this->render("course/fav.courses.html.twig", [
-            'user' => $user,
-            'courses' => $user->getFavCourses(),
+            'user' => $this->user,
         ]
         );
     }
 
+    // no need for slugger here
     #[Route('/fav/add/{id}', name:'app_add_fav_course')]
-    public function addFavourite(Request $request, int $id): Response{
-        /** @var \App\Entity\User $user */
-        $user = $this->getUser();
-
+    public function addFavouriteCourse(int $id): Response{
         $course = $this->courseRepository->find($id);
-        // TODO: handle the exception if course is not found
+
         if ($course) {
             // throw $this->createNotFoundException('The course does not exist');
-            $user->addFavCourse($course);
-            $this->em->persist($user);
+            $this->user->addFavCourse($course);
+            $this->em->persist($this->user);
             $this->em->flush();
+        }else{
+            // redirect to not found page
+            return $this->redirectToRoute('app_not_found');
         }
 
         return $this->redirectToRoute('app_course_favs');
     }
 
+    // no need for slugger here
     #[Route('/fav/remove/{id}', name:'app_remove_fav_course')]
-    public function removeFavourite(Request $request, int $id): Response{
-        /** @var \App\Entity\User $user */
-        $user = $this->getUser();
-
+    public function removeFavouriteCourse(int $id): Response{
         $course = $this->courseRepository->find($id);
-        // TODO: handle the exception if course is not found
+
         if ($course) {
-            // throw $this->createNotFoundException('The course does not exist');
-            $user->removeFavCourse($course);
-            $this->em->persist($user);
+            $this->user->removeFavCourse($course);
+            $this->em->persist($this->user);
             $this->em->flush();
+        }else{
+            // redirect to not found page
+            return $this->redirectToRoute('app_not_found');
         }
 
         return $this->redirectToRoute('app_course_favs');

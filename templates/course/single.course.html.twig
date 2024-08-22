@@ -1,22 +1,14 @@
-{% set userFavedCourse = user and user.favCourses.contains(course) %}
-
 <div class="single-course-card col-2 d-flex flex-column">
     <div class="single-course-card-image-container w-100 position-relative">
         <img src="{{asset(course.getImagePath())}}" class="w-100 h-100 rounded">
 
-
-        <button class="btn btn-{% if userFavedCourse %}primary{% else %}light{% endif %} rounded-circle position-absolute" 
-                style="top: 10px; right: 10px;"
+        <button class="btn btn-{% if user and user.favCourses.contains(course) %}primary{% else %}light{% endif %} rounded-circle position-absolute" 
                 onclick="window.location.replace('/fav/add/{{course.id}}')">
             <i class="far fa-heart"></i>
         </button>
 
-        {% if userFavedCourse %}{% endif %}
-        
-
-
-        <div class="text-light fw-medium position-absolute" style="bottom: 10px;left: 10px;">
-            <img src="{{asset('images/users/1.png')}}" style="width: 32px; height: 32px;">
+        <div class="single-course-teacher-container text-light fw-medium position-absolute">
+            <img src="{{asset('images/users/1.png')}}">
             {{course.getCreator().getFname()}} {{course.getCreator().getLname()}}
         </div>
     </div>
@@ -45,7 +37,7 @@
     <div class="w-100 px-4 py-0 d-flex justify-content-between align-items-center">
         <h4 class="fw-bold">${{course.price}}</h4>
 
-        <a href="#" class="text-decoration-none" style="color: inherit;">
+        <a href="#" class="text-decoration-none text-reset">
             <i class="fa fa-shopping-bag me-1"></i>
             <span class="fw-medium">Add to cart</span>
         </a>

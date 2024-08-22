@@ -19,8 +19,8 @@ class Course
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column]
-    private ?int $price = null;
+    #[ORM\Column(type: Types::FLOAT)]
+    private ?float $price = null;
 
     /**
      * @var Collection<int, User>
@@ -50,19 +50,20 @@ class Course
         return $this->title;
     }
 
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
 
+    public function setTitle(string $title): static {
+        $this->title = $title;
         return $this;
     }
 
-    public function getPrice(): ?int
+
+
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 

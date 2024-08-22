@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
-use App\Form\LoginFormType;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,14 +20,15 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class SecurityController extends AbstractController
 {
 
-    public function __construct(private EmailVerifier $emailVerifier){
+    private User|null $user;
+    public function __construct(private EmailVerifier $emailVerifier, Security $security){
+        $this->user = $security->getUser() ?? null;
     }
 
     
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->getUser()) {
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response{
+        if ($this->user) {
             return $this->redirectToRoute('app_home');
         }
 
@@ -51,9 +51,9 @@ class SecurityController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('mohamedtaki24@gmail.com', 'Acme Mail Bot'))
+                    ->from(new Address($this->getParameter('admin_email'), $this->getParameter('admin_name')))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject($this->getParameter('confirm_user_email_subject'))
                     ->htmlTemplate('auth/confirmation_email.html.twig')
             );
             return $this->render("auth/email.sent.html.twig");
@@ -68,23 +68,19 @@ class SecurityController extends AbstractController
     public function verifyUserEmail(Request $request): Response{
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         
-        // validate email confirmation link, sets User::isVerified=true and persists
         try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+            $this->emailVerifier->handleEmailConfirmation($request, $this->user);
         } catch (VerifyEmailExceptionInterface $exception) {
-            // $this->addFlash('verify_email_error', $exception->getReason());
-
             return $this->redirectToRoute('app_register');
         }
-
         return $this->redirectToRoute('app_home');
     }
 
 
     #[Route(path: '/login', name: 'app_login')]
-    public function login(Request $request, AuthenticationUtils $authenticationUtils) : Response
+    public function login(AuthenticationUtils $authenticationUtils) : Response
     {
-        if($this->getUser()){
+        if($this->user){
             return $this->redirectToRoute('app_home');
         }
         // get the login error if there is one
@@ -93,12 +89,14 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $prev_email = $authenticationUtils->getLastUsername();
 
-        return $this->render('auth/login.html.twig', ['prev_email' => $prev_email, 'error' => $error]);
+        return $this->render('auth/login.html.twig', [
+            'prev_email' => $prev_email, 
+            'error' => $error
+        ]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void{
         $this->redirectToRoute('app_login');
-        // throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

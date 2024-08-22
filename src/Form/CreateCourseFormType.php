@@ -5,11 +5,13 @@ namespace App\Form;
 use App\Entity\Course;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CreateCourseFormType extends AbstractType
@@ -25,9 +27,13 @@ class CreateCourseFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Title must not be blank!',
                     ]),
+                    new Length([
+                        'min' => 2, 
+                        'minMessage' => 'The title must be at least {{ limit }} characters long',
+                    ]),
                 ],
             ])
-            ->add('price', IntegerType::class, [
+            ->add('price', NumberType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
@@ -42,7 +48,15 @@ class CreateCourseFormType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                         'class' => 'form-control'
-                    ]
+                ],
+                'constraints' => [
+                    new File(
+                        extensions:['png', 'jpeg', 'jpg', '.svg'],
+                        maxSize: "4M",
+                        maxSizeMessage: "File is too large !",
+                        extensionsMessage: 'Invalid Image Format',
+                    )
+                ]
             ])
         ;
     }
