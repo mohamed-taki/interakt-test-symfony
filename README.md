@@ -71,20 +71,6 @@ Suivez les étapes ci-dessous pour configurer le projet localement :
    ```bash
    symfony console doctrine:fixtures:load
    ```
-   Appliquez la migration Génée dans la base de données :
-
-   ```bash
-   symfony console doctrine:migrations:migrate
-   ```
-
-8. **Installer les assets frontend (optionnel)**
-
-   Si le projet inclut des assets frontend, installez-les en utilisant npm :
-
-   ```bash
-   npm install
-   npm run dev
-   ```
 
 8. **Démarrer le serveur Symfony**
 
@@ -95,6 +81,41 @@ Suivez les étapes ci-dessous pour configurer le projet localement :
    ```
 
    L'application devrait maintenant être accessible à l'adresse `http://localhost:8000`.
+
+## Project Structure
+   │
+   ├── /src
+   │   ├── /Controller
+   │   │   ├── /CourseController
+   │   │   ├── /SecurityController
+   │   │   ├── /ErrorsController
+   │   ├── /Entity
+   │   │   ├── /User # Entité utilisateur
+   │   │   ├── /Course # Entité cours
+   │   ├── /Form # Types de formulaires de l'application
+   │   ├── /DataFixtures # Fixtures de données pour le jeu de données
+   │   ├── /Repository
+   │   ├── /Security
+   │   └── ...
+   │
+   ├── /public        # Fichiers accessibles publiquement
+   │   ├── /css
+   │   ├── /js
+   │   └── /images
+   │
+   ├── /templates    # Fichiers de templates (pour les projets web)
+   │   ├── /Auth # Templates d'authentification
+   │   ├── /Course # Templates liés aux cours
+   │   ├── /Errors # Templates des erreurs HTTP
+   │   ├── /form # Templates Twig
+   │   ├── /widgets # Templates des widgets
+   │   ├── base.html.twig # Template de base de l'application
+   │   └── page.html.twig # Template de page standard de l'application
+   │
+   ├── .env          # Variables d'environnement
+   └── README.md     # Ce fichier
+   └── ...
+
 
 ## Vérification par email
 
