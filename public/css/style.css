@@ -159,5 +159,116 @@ body {
 }
 /* END : Fav Courses Page */
 
+/* START : Header widget */
+.header-active-option{
+    border-bottom: 1px black solid;
+}
+
+.header-active-option ~ div {
+    margin-top: 1.2rem;
+}
+.header-card-btn{
+    border-color: #C8CAD8 !important;
+    color: #041228 !important;            
+    width: 50px;
+    height: 48px;
+}
+
+header{
+    height: 80px;
+}
+
+#fav-header-search-container, #header-search-container{
+    border: 1px #C8CAD8 solid;
+}
+/* END : Header widget */
+
+/* START : Footer widget */
+.footer-container{
+    width: 100%;
+    background-color: #041228;
+    border-radius: 15px 15px 0 0;
+    position: static; 
+    bottom: 0;
+    left: 0;
+}
+
+.footer-second-subcontainer{
+    width: 100%;
+    background-color: white;
+    border-radius: 20px 20px 0 0;
+    padding: 15rem;
+}
+
+.footer-title{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 60px;
+    color: white;
+}
+
+.footer-redirect-btn{
+    height: 115px;
+    width: 250px;
+}
+
+.footer-container .fa.fa-arrow-right{
+    transform: rotate(310deg);
+}
+/* END : Footer widget */
+
+
+/* START : Header widget */
+.header-active-option{
+    border-bottom: 1px black solid;
+}
+.header-card-btn{
+    border-color: #C8CAD8 !important;
+    color: #041228 !important;            
+    width: 50px;
+    height: 48px;
+}
+
+#header-auth-buttons-container button{
+    width: 130px;
+}
+/* END : Header widget */
+
+
+/* START : sidebar widget */
+#sidebar-container{
+    min-height: 100vh;
+}
+
+.sidebar-options-list{
+    color: #929292 !important;
+}
+
+.sidebar-options-list li{
+    height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-options-list li:hover{
+    background-color: #F5F7FF !important;
+    color: #041228 !important;
+    cursor: pointer;
+}
+
+.sidebar-options-list li.active{
+    background-color: #F5F7FF !important;
+    border-right: 4px solid #041228;
+    border-radius: 8px 0 0 8px;
+    color: #041228 !important;
+}
+
+.sidebar-logo-toggler-container a{
+    width: 90px; 
+    height: 30px;
+}
+/* END : sidebar widget */
+
 /* START : */
 /* END : */

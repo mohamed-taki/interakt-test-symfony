@@ -1,35 +1,9 @@
-<style>
-    .sidebar-options-list{
-        color: #929292 !important;
-    }
-
-    .sidebar-options-list li{
-        height: 48px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .sidebar-options-list li:hover{
-        background-color: #F5F7FF !important;
-        color: #041228 !important;
-        cursor: pointer;
-    }
-
-    .sidebar-options-list li.active{
-        background-color: #F5F7FF !important;
-        border-right: 4px solid #041228;
-        border-radius: 8px 0 0 8px;
-        color: #041228 !important;
-    }
-</style>
-
-<nav class="col-2 h d-flex flex-column bg-white" style="min-height: 100vh;">
+<nav class="col-2 h d-flex flex-column bg-white" id="sidebar-container">
     {# Start: Sidebar Logo + toggler #}
-    <div class="d-flex mt-3">
+    <div class="d-flex mt-3" id="sidebar-logo-toggler-container">
         <div class="col-9 d-flex justify-content-between align-items-center p-3">
             <a href="/home">
-                <img src="{{asset('images/logo_forsa.png')}}" style="width: 90px; height: 30px;">
+                <img src="{{asset('images/logo_forsa.png')}}">
             </a>
         </div>
         <button class="btn border-0">

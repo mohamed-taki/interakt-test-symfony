@@ -1,16 +1,5 @@
 {% block header %}
-    <style>
-        .header-active-option{
-            border-bottom: 1px black solid;
-        }
-        .header-card-btn{
-            border-color: #C8CAD8 !important;
-            color: #041228 !important;            
-            width: 50px;
-            height: 48px;
-        }
-    </style>
-    <header class="col-12 bg-white d-flex align-items-center" style="height: 80px;">
+    <header class="col-12 bg-white d-flex align-items-center">
     <div class="col-2 d-flex justify-content-end pe-5">
         <a href="/home">
             <img src="{{asset('images/logo_forsa.png')}}" alt="">
@@ -29,13 +18,13 @@
         category
     </div>
     <div class="col-3">
-        <div class="w-100 rounded-pill bg-white p-2" style="border: 1px #C8CAD8 solid;">
+        <div class="w-100 rounded-pill bg-white p-2" id="header-search-container">
             <button class="bg-transparent border-0 border-end pe-3"><i class="fa fa-search"></i></button>
             <input type="text" class="bg-transparent border-0" placeholder="Search Course Here">
         </div>
     </div>
     <div class="h-100 col-3 d-flex justify-content-center">
-        <ul class="d-flex list-unstyled gap-5 mb-0" style="margin-top: 1.2rem;">
+        <ul class="d-flex list-unstyled gap-5 mb-0">
             <li class="header-active-option mt-2">Courses</li>
             <li>
                 <button class="header-card-btn btn rounded-circle bg-transparent text-center"><i class="fa fa-shopping-bag"></i></button>
@@ -52,12 +41,12 @@
             </a>
         </div>
     {% else %}
-        <div class="col-3">
+        <div class="col-3" id="header-auth-buttons-container">
             <a href="/register" class="text-decoration-none">
-                <button class="btn btn-outline-primary me-2" style="width: 130px;">Register</button>
+                <button class="btn btn-outline-primary me-2">Register</button>
             </a>
             <a href="/login">
-                <button class="btn btn-primary" style="width: 130px;">Login</button>
+                <button class="btn btn-primary">Login</button>
             </a>
         </div>
         
