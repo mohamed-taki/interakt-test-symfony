@@ -1,0 +1,84 @@
+{% extends './base.html.twig' %} 
+{% block title %}Sign in{% endblock %} 
+
+{% block body %}
+<style>
+  #login-container{
+    min-height: 100vh;
+    background-color: #041228;
+    background-repeat: no-repeat;
+    background-position: right 100px bottom;
+    background-position-y: 50px;
+    background-size: contain;
+    background-image: url({{ asset('images/login.png') }});
+  }
+
+  .fa-eye{
+    top: 57%;
+    right: 20px;
+    cursor: pointer;
+    color: #84818A !important;
+  }
+</style>
+<div id="login-container">
+  <div class="container d-flex justify-content-between align-items-center h-100 p-5">
+    <div class="col-5 h-100 rounded bg-white">
+      {# start: form container #}
+      <form class="bg-white p-5 rounded" method="POST">
+        <h3 class="fw-bolder">SIGN IN</h3>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+
+        {# start: email #}
+        <div class="row">
+            <div class="form-group my-1">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" 
+                        name="email" id="email" 
+                        placeholder="Enter your Email"
+                        {% if prev_email %}value="{{prev_email}}"{% endif %}
+                        required>
+            </div>
+        </div>
+        {# end: email #}
+
+        {# start: password #}
+        <div class="row">
+          <div class="form-group my-1 position-relative">
+              <label for="password">Password</label>
+              <input type="password" required class="form-control" name="password" id="password" placeholder="Enter your password">
+          <i class="fa fa-eye position-absolute" onclick="togglePasswordVisibility(this, '#password')"></i>
+          </div>
+        </div>
+        {# end: password #}
+
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <a href="/register" class="text-decoration-none text-dark">
+            <span class="col-4">Can't Sign in ?</span>
+          </a>
+          <button type="submit" class="btn btn-primary col-4" style="height: 50px;">submit</button>
+        </div>
+
+        {% if error %}
+          <div class="card text-white bg-danger mt-3 ps-3 py-2">
+            <span>
+              <i class="fa fa-solid fa-exclamation-triangle text-white"></i>
+              {{ error.messageKey|trans(error.messageData, 'security') }}
+            </span>
+          </div>
+        {% endif %}
+
+        <div class="mt-5">
+          <small>
+            Protected by reCAPTCHA and subject to the <b>Cuboid Privacy Policy</b> and <b>Terms of Service</b>.
+          </small>
+        </div>
+
+
+      </form>
+      {# end: form container #}
+    </div>
+    <div class="col-5 h-100"></div>
+  </div>
+</div>
+{% endblock %}

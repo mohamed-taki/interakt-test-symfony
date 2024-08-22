@@ -1,0 +1,30 @@
+<div class="single-fav-course-container bg-light d-flex flex-column">
+    <div class="single-course-card-image-container w-100 position-relative">
+        <img src="{{asset(course.imagePath)}}" class="w-100 h-100 rounded">
+
+        <button class="btn btn-outline-primary text-light 
+                        rounded-circle border-0 position-absolute" 
+                style="top: 10px; right: 10px;"
+                onclick="window.location.replace('/fav/remove/{{course.id}}')">
+            <i class="fa fa-heart text-dark"></i>
+        </button>
+    </div>
+
+    
+    <div class="w-100 p-4 pb-0">
+        <small class="fs--3">Graphic Design</small>
+        <h6 class="text-wrap fw-bolder mt-2">{{course.title}}</h6>
+        <div class="d-flex flex-column justify-content-between mt-4 gap-2">
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa fa-book"></i>
+                    <span>9/12 Lessons Left</span>
+                </div>
+                <div class="single-fav-course-loading">
+                    <div class="single-fav-course-loading-completed" style="width: 80%;"></div>
+                </div>
+            </div>
+            <span>{{course.creator.fname}} {{course.creator.lname}}</span>
+        </div>
+    </div>
+</div>

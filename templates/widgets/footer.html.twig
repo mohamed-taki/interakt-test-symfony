@@ -1,0 +1,71 @@
+{% block footer %}
+    <style>
+        .footer-container{
+            width: 100%;
+            background-color: #041228;
+            border-radius: 15px 15px 0 0;
+            position: static; 
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-second-subcontainer{
+            width: 100%;
+            background-color: white;
+            border-radius: 20px 20px 0 0;
+            padding: 15rem;
+        }
+
+        .footer-title{
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 60px;
+            color: white;
+        }
+
+        .footer-redirect-btn{
+            height: 115px;
+            width: 250px;
+        }
+    </style>
+    <div class="footer-container" >
+        <div class="d-flex justify-content-between p-5">
+            <h1 class="footer-title col-4">So what are you waiting for ?</h1>
+            <div class="col-5 d-flex gap-3 mt-5">
+                <button class="footer-redirect-btn btn btn-light d-flex align-items-end gap-2">
+                    <span class="col-7 text-start fw-bold">LETS BUILD YOUR FUTURE!</span>
+                    <i class="fa fa-arrow-right col-5" style="transform: rotate(310deg);"></i>
+                </button>
+                <button class="footer-redirect-btn btn btn-outline-light d-flex align-items-end gap-2">
+                    <span class="col-6 text-start fw-bold">CONTACT US</span>
+                    <i class="fa fa-arrow-right col-7" style="transform: rotate(310deg);"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="footer-second-subcontainer d-flex flex-column justify-content-center py-4">
+            <div class="col-12 d-flex justify-content-between">
+                <ul class="col-5 d-flex justify-content-between list-unstyled">
+                    <li>About us</li>
+                    <li>Discover</li>
+                    <li>Explore</li>
+                    <li>Books</li>
+                </ul>
+                <ul class="col-1 d-flex justify-content-between list-unstyled">
+                    <li><i class="fab fa-facebook"></i></li>
+                    <li><i class="fab fa-twitter"></i></li>
+                    <li><i class="fab fa-youtube"></i></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="col-12 d-flex justify-content-between">
+                <div class="col-3"><span>copyright. ALl rights reserved</span></div>
+                <div class="col-4 d-flex justify-content-center"><img src="{{asset('images/logo_forsa.png')}}" class="w-auto" alt=""></div>
+                <ul class="col-3 d-flex justify-content-between list-unstyled">
+                    <li>Terms Of Service</li>
+                    <li>Privacy Policy</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

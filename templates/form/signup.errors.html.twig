@@ -1,0 +1,6 @@
+
+{% block form_errors %}
+    {% for error in errors %}
+        <div class="form-control-feedback text-danger">{{ error.message }}</div>
+    {% endfor %}
+{% endblock %}

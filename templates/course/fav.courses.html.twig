@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<style>
+    .single-fav-course-container{
+        height: 350px; 
+        width: 20%;
+    }
+    .single-fav-course-container span, .single-fav-course-container i {
+        color: #838383;
+    }
+    .single-course-card-image-container {
+        height: 170px;
+    }
+    .single-fav-course-loading{
+        background-color: #EDEDED;
+        height: 5px;
+        border-radius: 8px;
+    }
+    .single-fav-course-loading-completed{
+        background-color: #041228;
+        height: 100%;
+        border-radius: inherit;
+    }
+</style>
+
+
+<div class="d-flex">
+    {% include("widgets/sidebar.html.twig") %}
+   <div class="col-10 d-flex flex-column">
+        {{ include("widgets/fav.header.html.twig") }}
+
+        <div class="h-100 container d-flex flex-wrap gap-4 p-4" style="border-radius: 10px !important; background-color: whitesmoke;">
+        {% for course in courses %}
+            {% include "course/fav.course.html.twig" with {'course' : course} %}
+        {% endfor %}
+        </div>
+   </div>
+
+</div>
+
+{% include "widgets/footer.html.twig" %} 
+{% endblock %}

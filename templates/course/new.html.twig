@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %}
+{% block title %}Create new Course!{% endblock %}
+{% form_theme form 'form/signup.errors.html.twig' %}    
+
+{% block body %}
+{{ include("widgets/header.html.twig" , {'user' : user} ) }}
+    
+    <div class="container">
+        {# start: form container #}
+      <div class="bg-white p-5 rounded">
+        {{ form_start(form) }}
+        <h3 class="fw-bolder">Add course</h3>
+
+        {# start: title #}
+        <div class="row">
+            <div class="form-group my-1">
+                <label for="{{form.title.vars.id}}">{{ form_label(form.title) }}</label>
+                {{ form_widget(form.title) }}
+                {{ form_errors(form.title) }}
+            </div>
+        </div>
+        {# end: title #}
+        
+        {# start: price #}
+        <div class="row">
+            <div class="form-group my-1">
+                <label for="{{form.price.vars.id}}">{{ form_label(form.price) }}</label>
+                {{ form_widget(form.price) }}
+                {{ form_errors(form.price) }}
+            </div>
+        </div>
+        {# end: price #}
+        
+        {# start: image #}
+        <div class="row">
+            <div class="form-group my-1">
+                <label for="{{form.image.vars.id}}">{{ form_label(form.image) }}</label>
+                {{ form_widget(form.image) }}
+                {{ form_errors(form.image) }}
+            </div>
+        </div>
+        {# end: image #}
+        
+
+        <button type="submit" class="btn btn-primary col-12 mt-4" style="height: 50px;">submit</button>
+        
+        {{ form_end(form) }}
+      </div>
+      {# end: form container #}
+    </div>
+
+    {% include "widgets/footer.html.twig" %} 
+{% endblock %}
