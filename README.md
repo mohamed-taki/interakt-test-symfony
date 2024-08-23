@@ -83,6 +83,8 @@ Suivez les étapes ci-dessous pour configurer le projet localement :
    L'application devrait maintenant être accessible à l'adresse `http://localhost:8000`.
 
 ## Project Structure
+
+   ```bash
    │
    ├── /src
    │   ├── /Controller
@@ -115,7 +117,7 @@ Suivez les étapes ci-dessous pour configurer le projet localement :
    ├── .env          # Variables d'environnement
    └── README.md     # Ce fichier
    └── ...
-
+```
 
 ## Vérification par email
 
