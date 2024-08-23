@@ -270,5 +270,12 @@ header{
 }
 /* END : sidebar widget */
 
+
+/* START : Errors widget */
+#error-container{
+    min-height: 100vh;
+}
+/* END : Errors widget */
+
 /* START : */
 /* END : */
